@@ -1,0 +1,89 @@
+# Numu (Nupiro Muse) Configuration File
+# Version: 0.1.0
+# Format: HOCON (Human-Optimized Config Object Notation)
+
+core {
+    # Evaluation settings
+    precision = 12
+    max_steps = 1000
+    timeout = 5000
+    
+    # Default number system
+    number_system = "complex"
+    cache_size = 256MB
+}
+
+modules {
+    required = [
+        "core",
+        "arithmetic"
+    ]
+    
+    optional = [
+        "calculus.differential",
+        "calculus.integral",
+        "linear.basic"
+    ]
+
+    paths = [
+        "./modules",
+        "~/.numu/modules",
+        "/usr/share/numu/modules"
+    ]
+}
+
+output {
+    # Step-by-step display
+    show_steps = true
+    step_level = "normal"
+    notation = "standard"
+    decimal_separator = "."
+    colors {
+        primary = "#4fc3f7"
+        secondary = "#aed581"
+        error = "#ff5252"
+        warning = "#ffb74d"
+    }
+}
+
+calculus {
+    differential {
+        default_method = "symbolic"
+        numeric_step = 1e-5
+    }
+    
+    # Integration settings
+    integral {
+        default_method = "symbolic"
+        relative_tolerance = 1e-6
+        absolute_tolerance = 1e-10
+    }
+}
+
+# Future module configurations
+linear {
+    matrix {
+        display_mode = "pretty"  # pretty, compact, flat
+        max_display_size = 6x6   # Larger matrices get truncated
+    }
+}
+
+developer {
+    # Debugging options
+    log_level = "warn"       # error, warn, info, debug, trace
+    ast_dump = false         # Dump AST after parsing
+    timing = false           # Show computation timings
+}
+
+# Plugin configurations
+plugins {
+    graphing {
+        enabled = true
+        backend = "auto"     # auto, gnuplot, matplotlib, none
+    }
+    
+    notebook {
+        enabled = false
+        port = 8888
+    }
+}
